@@ -118,7 +118,7 @@ namespace xsd2code.cli.Core
                     .WithUsing("System.Xml.Serialization")
                     .WithNameSpace("Xsd2Code.Classes.Generated")
                     .WithClassName(simple.CleanName)
-                    .WithAttribute(new v2.Core.ClassGenerator.Attribute
+                    .WithAttribute(new v2.Core.Models.XmlAttribute
                     {
                         Name = "XmlRoot",
                         Values = new Dictionary<string, object>
@@ -135,7 +135,7 @@ namespace xsd2code.cli.Core
                     .WithUsing("System.Xml.Serialization")
                     .WithNameSpace("Xsd2Code.Classes.Generated")
                     .WithClassName(simple.CleanName)
-                    .WithAttribute(new v2.Core.ClassGenerator.Attribute
+                    .WithAttribute(new v2.Core.Models.XmlAttribute
                     {
                         Name = "XmlRoot",
                         Values = new Dictionary<string, object>
@@ -159,7 +159,7 @@ namespace xsd2code.cli.Core
                     .WithUsing("System.Xml.Serialization")
                     .WithNameSpace("Xsd2Code.Classes.Generated")
                     .WithClassName(complex.CleanName)
-                    .WithAttribute(new v2.Core.ClassGenerator.Attribute
+                    .WithAttribute(new v2.Core.Models.XmlAttribute
                     {
                         Name = "XmlRoot",
                         Values = new Dictionary<string, object>
@@ -171,14 +171,14 @@ namespace xsd2code.cli.Core
                     //.WithClassAccessibility(Accessibility.Public)
                     .WithProperties(complex.Elements.Select(e =>
                     {
-                        return new v2.Core.ClassGenerator.ClassProperty(e.CleanType)
+                        return new v2.Core.Models.Property(e.CleanType)
                         {
                             Name = e.CleanName,
                             //Accessibility = Accessibility.Public,
                             IsAutoProperty = true,
-                            Attributes = new List<v2.Core.ClassGenerator.Attribute>
+                            XmlAttributes = new List<v2.Core.Models.XmlAttribute>
                             {
-                                new v2.Core.ClassGenerator.Attribute
+                                new v2.Core.Models.XmlAttribute
                                 {
                                     Name = "XmlElement",
                                     Values = new Dictionary<string, object>
@@ -191,14 +191,14 @@ namespace xsd2code.cli.Core
                     }).ToList())
                     .WithProperties(complex.Attributes.Select(a =>
                     {
-                        return new v2.Core.ClassGenerator.ClassProperty(a.CleanType)
+                        return new v2.Core.Models.Property(a.CleanType)
                         {
                             Name = a.CleanName,
                             //Accessibility = Accessibility.Public,
                             IsAutoProperty = true,
-                            Attributes = new List<v2.Core.ClassGenerator.Attribute>
+                            XmlAttributes = new List<v2.Core.Models.XmlAttribute>
                             {
-                                new v2.Core.ClassGenerator.Attribute
+                                new v2.Core.Models.XmlAttribute
                                 {
                                     Name="XmlAttribute",
                                     Values=new Dictionary<string, object>
@@ -216,7 +216,7 @@ namespace xsd2code.cli.Core
                     .WithUsing("System.Xml.Serialization")
                     .WithNameSpace("Xsd2Code.Classes.Generated")
                     .WithClassName(complex.CleanName)
-                    .WithAttribute(new v2.Core.ClassGenerator.Attribute
+                    .WithAttribute(new v2.Core.Models.XmlAttribute
                     {
                         Name = "XmlRoot",
                         Values = new Dictionary<string, object>
@@ -228,14 +228,14 @@ namespace xsd2code.cli.Core
                     //.WithClassAccessibility(Accessibility.Public)
                     .WithProperties(complex.Elements.Select(e =>
                     {
-                        return new v2.Core.ClassGenerator.ClassProperty(e.CleanType)
+                        return new v2.Core.Models.Property(e.CleanType)
                         {
                             Name = e.CleanName,
                             //Accessibility = Accessibility.Public,
                             IsAutoProperty = true,
-                            Attributes = new List<v2.Core.ClassGenerator.Attribute>
+                            XmlAttributes = new List<v2.Core.Models.XmlAttribute>
                             {
-                                new v2.Core.ClassGenerator.Attribute
+                                new v2.Core.Models.XmlAttribute
                                 {
                                     Name = "XmlElement",
                                     Values = new Dictionary<string, object>
@@ -248,14 +248,14 @@ namespace xsd2code.cli.Core
                     }).ToList())
                     .WithProperties(complex.Attributes.Select(a =>
                     {
-                        return new v2.Core.ClassGenerator.ClassProperty(a.CleanType)
+                        return new v2.Core.Models.Property(a.CleanType)
                         {
                             Name = a.CleanName,
                             //Accessibility = Accessibility.Public,
                             IsAutoProperty = true,
-                            Attributes = new List<v2.Core.ClassGenerator.Attribute>
+                            XmlAttributes = new List<v2.Core.Models.XmlAttribute>
                             {
-                                new v2.Core.ClassGenerator.Attribute
+                                new v2.Core.Models.XmlAttribute
                                 {
                                     Name="XmlAttribute",
                                     Values=new Dictionary<string, object>

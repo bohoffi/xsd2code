@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using xsd2code.v2.Core.Models;
 using xsd2code.v2.Utils;
 using SF = Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
@@ -70,7 +71,7 @@ namespace xsd2code.v2.Core
             null);
         }
 
-        private SeparatedSyntaxList<AttributeSyntax> GenerateAttributes(List<Attribute> attributes)
+        private SeparatedSyntaxList<AttributeSyntax> GenerateAttributes(List<XmlAttribute> attributes)
         {
             return SF.SeparatedList(attributes.Select(attr =>
             {
@@ -78,7 +79,7 @@ namespace xsd2code.v2.Core
             }).ToList());
         }
 
-        private SyntaxList<MemberDeclarationSyntax> GenerateProperties(List<ClassProperty> props)
+        private SyntaxList<MemberDeclarationSyntax> GenerateProperties(List<Property> props)
         {
             return SF.List(props.Select(p =>
             {
@@ -106,7 +107,7 @@ namespace xsd2code.v2.Core
                        .WithAttributeLists(
                                 SF.SingletonList(
                                     SF.AttributeList(
-                                        GenerateAttributes(p.Attributes))))
+                                        GenerateAttributes(p.XmlAttributes))))
                        .WithModifiers(
                             SF.TokenList(
                                 SF.Token(SyntaxKind.PublicKeyword)))
@@ -144,14 +145,14 @@ namespace xsd2code.v2.Core
             internal string _namespace;
             internal string _className;
             //internal Accessibility? _classAccessibility = null;
-            internal List<Attribute> _attributes;
-            internal List<ClassProperty> _properties;
+            internal List<XmlAttribute> _attributes;
+            internal List<Property> _properties;
 
             public Builder()
             {
                 _usings = new List<string>();
-                _properties = new List<ClassProperty>();
-                _attributes = new List<Attribute>();
+                _properties = new List<Property>();
+                _attributes = new List<XmlAttribute>();
             }
 
             public Builder WithUsing(string usingName)
@@ -187,7 +188,7 @@ namespace xsd2code.v2.Core
             //    return this;
             //}
 
-            public Builder WithAttribute(Attribute attribute)
+            public Builder WithAttribute(XmlAttribute attribute)
             {
                 _attributes.Add(attribute);
                 return this;
@@ -207,7 +208,7 @@ namespace xsd2code.v2.Core
             //    return this;
             //}
 
-            public Builder WithProperties(List<ClassProperty> props)
+            public Builder WithProperties(List<Property> props)
             {
                 _properties = _properties.Union(props).ToList();
                 return this;
@@ -230,48 +231,6 @@ namespace xsd2code.v2.Core
                     throw new ArgumentNullException("class name");
                 }
             }
-        }
-
-        public class ClassProperty
-        {
-            public ClassProperty(string typeString)
-            {
-                Attributes = new List<Attribute>();
-
-                TypeString = typeString;
-            }
-
-            public string Name { get; set; }
-            //public Accessibility Accessibility { get; set; }
-            public string TypeString { get; set; }
-            public bool IsAutoProperty { get; set; }
-            public List<Attribute> Attributes { get; set; }
-
-            public string CleanName => !string.IsNullOrWhiteSpace(Name) ? Name.Replace(".", string.Empty) : string.Empty;
-
-            public PropertyDeclarationSyntax ToDeclarationSyntax()
-            {
-                var convertedType = TypeConverter.Type(TypeString);
-                if (convertedType.HasValue)
-                {
-                    return new PropertyGenerator().GenerateProperty(CleanName, convertedType.Value);
-                }
-                else
-                {
-                    return new PropertyGenerator().GenerateProperty(CleanName, TypeString);
-                }
-            }
-        }
-
-        public class Attribute
-        {
-            public Attribute()
-            {
-                Values = new Dictionary<string, object>();
-            }
-
-            public string Name { get; set; }
-            public Dictionary<string, object> Values { get; set; }
         }
     }
 }

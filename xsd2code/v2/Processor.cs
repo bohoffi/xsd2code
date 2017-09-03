@@ -7,6 +7,7 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Text;
 using xsd2code.v2.Core;
+using xsd2code.v2.Core.Models;
 
 namespace xsd2code.v2
 {
@@ -44,7 +45,7 @@ namespace xsd2code.v2
                     //.WithNameSpace("Xsd2Code.Classes.Generated")
                     .WithNameSpace(!string.IsNullOrWhiteSpace(Options.Namespace) ? Options.Namespace : "Xsd2Code.Classes.Generated")
                     .WithClassName(simple.CleanName)
-                    .WithAttribute(new ClassGenerator.Attribute
+                    .WithAttribute(new XmlAttribute
                     {
                         Name = "XmlRoot",
                         Values = new Dictionary<string, object>
@@ -71,7 +72,7 @@ namespace xsd2code.v2
                     //.WithNameSpace("Xsd2Code.Classes.Generated")
                     .WithNameSpace(!string.IsNullOrWhiteSpace(Options.Namespace) ? Options.Namespace : "Xsd2Code.Classes.Generated")
                     .WithClassName(complex.CleanName)
-                    .WithAttribute(new ClassGenerator.Attribute
+                    .WithAttribute(new XmlAttribute
                     {
                         Name = "XmlRoot",
                         Values = new Dictionary<string, object>
@@ -83,14 +84,14 @@ namespace xsd2code.v2
                     //.WithClassAccessibility(Accessibility.Public)
                     .WithProperties(complex.Elements.Select(e =>
                     {
-                        return new ClassGenerator.ClassProperty(e.CleanType)
+                        return new Property(e.CleanType)
                         {
                             Name = e.CleanName,
                             //Accessibility = Accessibility.Public,
                             IsAutoProperty = true,
-                            Attributes = new List<ClassGenerator.Attribute>
+                            XmlAttributes = new List<XmlAttribute>
                             {
-                                new ClassGenerator.Attribute
+                                new XmlAttribute
                                 {
                                     Name = "XmlElement",
                                     Values = new Dictionary<string, object>
@@ -103,14 +104,14 @@ namespace xsd2code.v2
                     }).ToList())
                     .WithProperties(complex.Attributes.Select(a =>
                     {
-                        return new ClassGenerator.ClassProperty(a.CleanType)
+                        return new Property(a.CleanType)
                         {
                             Name = a.CleanName,
                             //Accessibility = Accessibility.Public,
                             IsAutoProperty = true,
-                            Attributes = new List<ClassGenerator.Attribute>
+                            XmlAttributes = new List<XmlAttribute>
                             {
-                                new ClassGenerator.Attribute
+                                new XmlAttribute
                                 {
                                     Name="XmlAttribute",
                                     Values=new Dictionary<string, object>

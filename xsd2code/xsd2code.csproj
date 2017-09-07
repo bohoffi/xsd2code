@@ -169,6 +169,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="v2\Core\AttributeGenerator.cs" />
     <Compile Include="v2\Core\ClassGenerator.cs" />
+    <Compile Include="v2\Core\Enums\Modifier.cs" />
     <Compile Include="v2\Core\Models\XmlAttribute.cs" />
     <Compile Include="v2\Core\Models\Class.cs" />
     <Compile Include="v2\Core\Models\Property.cs" />

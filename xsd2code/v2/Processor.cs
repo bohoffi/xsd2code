@@ -84,12 +84,25 @@ namespace xsd2code.v2
                     //.WithClassAccessibility(Accessibility.Public)
                     .WithProperties(complex.Elements.Select(e =>
                     {
-                        return new Property(e.CleanType)
-                        {
-                            Name = e.CleanName,
-                            //Accessibility = Accessibility.Public,
-                            IsAutoProperty = true,
-                            XmlAttributes = new List<XmlAttribute>
+//                        return new Property(e.CleanType)
+//                        {
+//                            Name = e.CleanName,
+//                            //Accessibility = Accessibility.Public,
+//                            IsAutoProperty = true,
+//                            XmlAttributes = new List<XmlAttribute>
+//                            {
+//                                new XmlAttribute
+//                                {
+//                                    Name = "XmlElement",
+//                                    Values = new Dictionary<string, object>
+//                                    {
+//                                        {"ElementName", e.Name }
+//                                    }
+//                                }
+//                            }
+//                        };
+                        return new Property.Builder(e.CleanName, e.CleanType)
+                            .WithXmlAttributes(new List<XmlAttribute>
                             {
                                 new XmlAttribute
                                 {
@@ -99,28 +112,41 @@ namespace xsd2code.v2
                                         {"ElementName", e.Name }
                                     }
                                 }
-                            }
-                        };
+                            })
+                            .Build();
                     }).ToList())
                     .WithProperties(complex.Attributes.Select(a =>
                     {
-                        return new Property(a.CleanType)
-                        {
-                            Name = a.CleanName,
-                            //Accessibility = Accessibility.Public,
-                            IsAutoProperty = true,
-                            XmlAttributes = new List<XmlAttribute>
+//                        return new Property(a.CleanType)
+//                        {
+//                            Name = a.CleanName,
+//                            //Accessibility = Accessibility.Public,
+//                            IsAutoProperty = true,
+//                            XmlAttributes = new List<XmlAttribute>
+//                            {
+//                                new XmlAttribute
+//                                {
+//                                    Name="XmlAttribute",
+//                                    Values=new Dictionary<string, object>
+//                                    {
+//                                        {"ElementName", a.Name }
+//                                    }
+//                                }
+//                            }
+//                        };
+                        return new Property.Builder(a.CleanName, a.CleanType)
+                            .WithXmlAttributes(new List<XmlAttribute>
                             {
                                 new XmlAttribute
                                 {
-                                    Name="XmlAttribute",
-                                    Values=new Dictionary<string, object>
+                                    Name = "XmlElement",
+                                    Values = new Dictionary<string, object>
                                     {
                                         {"ElementName", a.Name }
                                     }
                                 }
-                            }
-                        };
+                            })
+                            .Build();
                     }).ToList())
                     .Build()
                     .GenerateClassCode();

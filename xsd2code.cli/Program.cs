@@ -16,7 +16,7 @@ namespace xsd2code.cli
             // args should be a file path or a directory path
             if (args != null && args.Length == 1)
             {
-                new Processor(args[0], ApiVersion.v2).Process();
+//                new Processor(args[0], ApiVersion.v2).Process();
             }
         }
     }
